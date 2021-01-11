@@ -1,25 +1,69 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
-function App() {
+const categories = [
+  {
+    id: "all",
+    text: "All",
+  },
+  {
+    id: "grocery",
+    text: "Grocery",
+  },
+  {
+    id: "fashion",
+    text: "Fashion",
+  },
+  {
+    id: "electronics",
+    text: "Electronics",
+  },
+  {
+    id: "furniture",
+    text: "Furniture",
+  },
+];
+
+const App = () => {
+  const [selectedCategory, setCategory] = useState("all");
+  const [todoText, setTodoText] = useState("");
+  const onSubmitData = (e) => {
+    e.preventDefault();
+    console.log("form submitted");
+    console.log("Category : ", selectedCategory);
+    console.log("Todo Value : ", todoText);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="app">
+      <div>
+        <span>Select Category</span>
+        <select
+          name="category"
+          defaultValue={selectedCategory}
+          onChange={(e) => setCategory(e.target.value)}
         >
-          Learn React
-        </a>
-      </header>
+          {categories.map((obj, indx) => (
+            <option key={`${indx}`} value={obj.id}>
+              {obj.text}
+            </option>
+          ))}
+        </select>
+      </div>
+      <br />
+      <div>
+        <form onSubmit={onSubmitData}>
+          <input
+            type="text"
+            name="todo"
+            value={todoText}
+            onChange={(e) => setTodoText(e.target.value)}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
